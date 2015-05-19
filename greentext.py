@@ -6,7 +6,7 @@ __module_version__ = '0'
 __module_description__ = 'Turns text green if it starts with ">"'
  
 
-def stutter(text):
+def greentext(text):
     result = re.search("\A>[^\W_].+", text)
     if result is not None:
     	return "\0033"+text
@@ -27,7 +27,7 @@ def send_message(word, word_eol, userdata):
     msg = hexchat.get_info('inputbox')
     if msg is None:
             return
-    hexchat.command("settext %s" % stutter(msg))
+    hexchat.command("settext %s" % greentext(msg))
 
 def receive_message(word, word_eol, userdata):
 	result = re.search("\A>[^\W_].+", word[1])
