@@ -30,12 +30,16 @@ def send_message(word, word_eol, userdata):
     hexchat.command("settext %s" % greentext(msg))
 
 def receive_message(word, word_eol, userdata):
-	result = re.search("\A>[^\W_].+", word[1])
-	if result is not None:
-		hexchat.emit_print("Channel Message", word[0], "\0033"+word[1], word[2], word[3])
-		return hexchat.EAT_ALL
-	else:
-		return hexchat.EAT_NONE
+  result = re.search("\A>[^\W_].+", word[1])
+  if result is not None:
+    try:
+      prefix = word[2]
+    except IndexError:
+      prefix = ""
+    hexchat.emit_print("Channel Message", word[0], "\0033"+word[1], prefix)
+    return hexchat.EAT_ALL
+  else:
+    return hexchat.EAT_NONE
 
 
        
